@@ -20,8 +20,8 @@ async function startQuiz(questions) {
   let alternatives = [];
   let savedAnswers = [];
   let randomIndex = Math.floor(Math.random() * quizArray[currentQIndex].incorrect_answers.length + 1); // Creates a random index for inserting correct answer
-  
-  
+
+
   questionNode.innerHTML += `<p>${quizArray[currentQIndex].question}</p>`; // Writes the question to the page
 
 
@@ -30,27 +30,33 @@ async function startQuiz(questions) {
     quizArray[currentQIndex].incorrect_answers // Pushes incorrect answers to alternatives array
       .forEach(alternative => alternatives
         .push(alternative))
-        
-    
+
+
     alternatives
       .splice(randomIndex, 0, quizArray[currentQIndex].correct_answer) // Places the correct answer at a random index in alternatives array
-    
-    
+
+
     alternatives.forEach(alternative =>
-      questionNode.innerHTML +=`
+      questionNode.innerHTML += `
         
-        <label for="${alternative}">${alternative}</label>
-        <input type=radio id="${alternative}" name="alternative" value="${alternative}">`)
-      
-    
+      <input type=radio id="${alternative}" name="alternative" value="${alternative}">
+      <label for="${alternative}">${alternative}</label> <br>
+      `);
+
+
     console.log(alternatives)
 
 
-  
+
   }
-  
-  else if (quizArray.type = "boolean") { // If question is true or false
-    quizArray[currentQIndex].incorrect_answers
+
+  else if (quizArray.type = "boolean") { // If answer is true or false
+    questionNode.innerHTML += `
+    <input type=radio id="true" name="alternative" value="false"}">
+      <label for="true">True</label> <br>
+      <input type=radio id="false" name="alternative" value="false"}">
+      <label for="false">False</label> <br>
+    `;
   }
 
 }
