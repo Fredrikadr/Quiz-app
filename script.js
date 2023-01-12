@@ -5,6 +5,7 @@ let numQuestionsNode = document.querySelector("#numQuestions");
 let questionNode = document.querySelector("#question")
 
 
+
 async function getQuestions(url) {
   const response = await fetch(
     `${url}amount=${numQuestionsNode.value}`
@@ -14,11 +15,11 @@ async function getQuestions(url) {
   return JSON.results;
 }
 
-async function startQuiz(questions) {
-  let currentQIndex = 0;
+async function startQuiz(questions, questionIndex, answers) {
+  let currentQIndex = questionIndex
   let quizArray = await questions;
   let alternatives = [];
-  let savedAnswers = [];
+  let savedAnswers = answers;
   let randomIndex = Math.floor(Math.random() * quizArray[currentQIndex].incorrect_answers.length + 1); // Creates a random index for inserting correct answer
 
 
@@ -39,25 +40,48 @@ async function startQuiz(questions) {
     alternatives.forEach(alternative =>
       questionNode.innerHTML += `
         
-      <input type=radio id="${alternative}" name="alternative" value="${alternative}">
+      <input class="radio-btn" type=radio id="${alternative}" name="alternative" value="${alternative}">
       <label for="${alternative}">${alternative}</label> <br>
       `);
 
-
+      
     console.log(alternatives)
-
-
-
+    
   }
 
   else if (quizArray.type = "boolean") { // If answer is true or false
     questionNode.innerHTML += `
-    <input type=radio id="true" name="alternative" value="false"}">
+    <input class="radio-btn" type=radio id="true" name="alternative" value="false"}">
       <label for="true">True</label> <br>
-      <input type=radio id="false" name="alternative" value="false"}">
+      <input class="radio-btn" type=radio id="false" name="alternative" value="false"}">
       <label for="false">False</label> <br>
     `;
   }
+
+
+  //Buttons
+  questionNode.innerHTML += `
+  <button id="back-btn">Back</button>
+  <button id="next-btn">Next</button>
+  `;
+  let backButtonNode = document.querySelector("#back-btn");
+  let nextButtonNode = document.querySelector("#next-btn");
+
+  backButtonNode.addEventListener("click", () => {
+    if (currentQIndex == 0) {
+      return;
+    } else {
+      currentQIndex--;
+      questionNode.innerHTML = "";
+      startQuiz(quizArray, currentQIndex);
+    }
+  })
+
+  nextButtonNode.addEventListener("click", () => {
+    currentQIndex++;
+    questionNode.innerHTML = "";
+    startQuiz(quizArray, currentQIndex);
+  })
 
 }
 
@@ -69,4 +93,4 @@ function printBooleanAlternatives(question) {
 }
 
 
-startQuiz(getQuestions(url))
+startQuiz(getQuestions(url), 0, [])
