@@ -4,8 +4,33 @@ let url = "https://opentdb.com/api.php?";
 const numQuestionsNode = document.querySelector("#numQuestions");
 const questionNode = document.querySelector("#question")
 const buttonContainerNode = document.querySelector("#button-container")
+const settingsNode = document.querySelector("#settings")
 let currentQIndex = 0;
 let savedAnswers = [];
+
+function quizSettings() {
+  //number of questions
+  //category
+  //difficulty
+  //type: multiple/true-false
+  
+}
+
+function getRandomIndex(arrLength) {
+  //TODO
+}
+
+function multipleChoiceHandler() {
+  //TODO
+}
+
+function trueFalseHandler() {
+  //TODO
+}
+
+function checkAnswers() {
+  //TODO
+}
 
 
 async function getQuestions(url) {
@@ -22,14 +47,6 @@ async function startQuiz(questions) {
   let alternatives = [];
   
   let randomIndex = Math.floor(Math.random() * quizArray[currentQIndex].incorrect_answers.length + 1); // Creates a random index for inserting correct answer
-
-
-  // Pushes empty strings to savedAnswers equal to the number of alternatives
-  if (savedAnswers.length < 1) {
-    for (let i = 0; i < alternatives.length; i++) {
-      savedAnswers.push("");
-    }
-  }
 
   questionNode.innerHTML += `<p>${quizArray[currentQIndex].question}</p>`; // Writes the question to the page
 
@@ -73,7 +90,7 @@ async function startQuiz(questions) {
   else if (quizArray.type = "boolean") { // If answer is true or false
     
     questionNode.innerHTML += `
-    <input class="radio-btn" type=radio id="true" name="alternative" value="false"}">
+      <input class="radio-btn" type=radio id="true" name="alternative" value="false"}">
       <label for="true">True</label> <br>
       <input class="radio-btn" type=radio id="false" name="alternative" value="false"}">
       <label for="false">False</label> <br>
@@ -87,6 +104,7 @@ async function startQuiz(questions) {
       return;
     } else {
       savedAnswers[currentQIndex] = event.target.value;
+      console.log(savedAnswers)
     }
   });
 
@@ -111,18 +129,15 @@ async function startQuiz(questions) {
   })
 
   nextButtonNode.addEventListener("click", () => {
-    currentQIndex++;
-    questionNode.innerHTML = "";
-    buttonContainerNode.innerHTML = "";
-    startQuiz(quizArray, currentQIndex, savedAnswers);
+    if(currentQIndex <= quizArray.length) {
+      currentQIndex++;
+      questionNode.innerHTML = "";
+      buttonContainerNode.innerHTML = "";
+      startQuiz(quizArray, currentQIndex, savedAnswers);
+    } else {
+      return;
+    }
   })
-
-}
-
-
-
-
-function printBooleanAlternatives(question) {
 
 }
 
