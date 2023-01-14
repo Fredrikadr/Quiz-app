@@ -1,19 +1,39 @@
 
 let url = "https://opentdb.com/api.php?";
+let categoriesURL = "https://opentdb.com/api_category.php";
 
 const numQuestionsNode = document.querySelector("#numQuestions");
-const questionNode = document.querySelector("#question")
-const buttonContainerNode = document.querySelector("#button-container")
-const settingsNode = document.querySelector("#settings")
+const questionNode = document.querySelector("#question");
+const buttonContainerNode = document.querySelector("#button-container");
+const settingsNode = document.querySelector("#settings");
 let currentQIndex = 0;
 let savedAnswers = [];
 
-function quizSettings() {
-  //number of questions
-  //category
-  //difficulty
-  //type: multiple/true-false
+async function getCategories(url) {
+  let categories = await fetch(url)
+  let categoriesJSON = await categories.json();
+  return categoriesJSON;
+}
+
+quizSettings(categoriesURL)
+
+async function quizSettings(url) {
+  let categories = await getCategories(url);  //Fetches categories from API
+  let categoryNode = document.querySelector("#category-select");
   
+  //Puts each category as an option in dropdown menu
+  categories.trivia_categories.forEach(category => {
+    categoryNode.innerHTML += `
+    <option value=${category.id}>${category.name}</option>
+    `;
+  })
+
+
+  
+}
+
+function getQuizSettings() {
+  //TODO
 }
 
 function getRandomIndex(arrLength) {
@@ -142,4 +162,4 @@ async function startQuiz(questions) {
 }
 
 
-startQuiz(getQuestions(url), 0, [])
+/* startQuiz(getQuestions(url)) */
