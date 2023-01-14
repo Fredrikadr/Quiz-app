@@ -8,11 +8,28 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="settings">
+  <form id="settings">
     <label for="numQuestions">Number of questions(1-50)</label>
     <input type=text name="numQuestions" id="numQuestions">
+    <label for="category">Select category</label>
+    <select name="category" id="category-select">
+      <option value="">Any Category</option>
+    </select>
+    <label for="difficulty">Select Difficulty</label>
+    <select name="difficulty">
+      <option value="">Any Difficulty</option>
+      <option value="easy">Easy</option>
+      <option value="medium">Medium</option>
+      <option value="hard">Hard</option>
+    </select>
+    <label for="type">Select type</label>
+    <select name="type" id="type-select">
+      <option value="">Any type</option>
+      <option name="boolean">True/False</option>
+      <option value="multiple">Multiple Choice</option>
+    </select>
     <input type="button" value="Start Quiz" id="startQuiz">
-  </div>
+  </form>
   <fieldset id="question"></fieldset>
   <div id="button-container"></div>
   
