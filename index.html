@@ -10,8 +10,8 @@
 <body>
   <form id="settings">
     <label for="numQuestions">Number of questions(1-50)</label>
-    <input type=text name="numQuestions" id="numQuestions">
-    <label for="category">Select category</label>
+    <input type="number" name="numQuestions" id="numQuestions" min="1" max="50">
+    <label for="category">Select Category</label>
     <select name="category" id="category-select">
       <option value="">Any Category</option>
     </select>
