@@ -6,6 +6,7 @@ const numQuestionsNode = document.querySelector("#numQuestions");
 const questionNode = document.querySelector("#question");
 const buttonContainerNode = document.querySelector("#button-container");
 const settingsNode = document.querySelector("#settings");
+let startButtonNode = document.querySelector("#startQuiz");
 let currentQIndex = 0;
 let savedAnswers = [];
 
@@ -15,12 +16,15 @@ async function getCategories(url) {
   return categoriesJSON;
 }
 
+
+  startButtonNode.addEventListener("click", getQuizSettings)
+
 quizSettings(categoriesURL)
 
 async function quizSettings(url) {
   let categories = await getCategories(url);  //Fetches categories from API
   let categoryNode = document.querySelector("#category-select");
-  
+
   //Puts each category as an option in dropdown menu
   categories.trivia_categories.forEach(category => {
     categoryNode.innerHTML += `
@@ -29,11 +33,36 @@ async function quizSettings(url) {
   })
 
 
-  
+
 }
 
 function getQuizSettings() {
-  //TODO
+  let queryString = url;
+  let settingsNodeList = document.querySelectorAll("#settings")[0];
+  let numQuestions = settingsNodeList[0].value;
+  let category = settingsNodeList[1].value;
+  let difficulty = settingsNodeList[2].value
+  let questionType = settingsNodeList[3].value
+
+  if (numQuestions != "") {
+    queryString += `amount=${settingsNodeList[0].value}`;
+  } else return;
+  
+  if (category != "") {
+    queryString += `&category=${category}`;
+  }
+  if (difficulty != "") {
+    queryString += `&difficulty=${difficulty}`;
+  }
+  if (questionType != "") {
+    queryString += `&type=${questionType}`
+  }
+  console.log(queryString)
+  startQuiz(getQuestions(queryString))
+
+
+ 
+  
 }
 
 function getRandomIndex(arrLength) {
@@ -54,9 +83,7 @@ function checkAnswers() {
 
 
 async function getQuestions(url) {
-  const response = await fetch(
-    `${url}amount=${numQuestionsNode.value}`
-  );
+  const response = await fetch(url);
   const JSON = await response.json();
   console.log(JSON.results)
   return JSON.results;
@@ -65,7 +92,9 @@ async function getQuestions(url) {
 async function startQuiz(questions) {
   let quizArray = await questions;
   let alternatives = [];
-  
+
+  settingsNode.innerHTML= "";
+
   let randomIndex = Math.floor(Math.random() * quizArray[currentQIndex].incorrect_answers.length + 1); // Creates a random index for inserting correct answer
 
   questionNode.innerHTML += `<p>${quizArray[currentQIndex].question}</p>`; // Writes the question to the page
@@ -102,13 +131,13 @@ async function startQuiz(questions) {
       }
     })
 
-      
+
     console.log(alternatives)
-    
+
   }
 
   else if (quizArray.type = "boolean") { // If answer is true or false
-    
+
     questionNode.innerHTML += `
       <input class="radio-btn" type=radio id="true" name="alternative" value="false"}">
       <label for="true">True</label> <br>
@@ -136,6 +165,7 @@ async function startQuiz(questions) {
   `;
   let backButtonNode = document.querySelector("#back-btn");
   let nextButtonNode = document.querySelector("#next-btn");
+  
 
   backButtonNode.addEventListener("click", () => {
     if (currentQIndex <= 0) {
@@ -149,7 +179,7 @@ async function startQuiz(questions) {
   })
 
   nextButtonNode.addEventListener("click", () => {
-    if(currentQIndex <= quizArray.length) {
+    if (currentQIndex <= quizArray.length) {
       currentQIndex++;
       questionNode.innerHTML = "";
       buttonContainerNode.innerHTML = "";
