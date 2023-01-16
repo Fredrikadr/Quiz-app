@@ -6,7 +6,7 @@ const numQuestionsNode = document.querySelector("#numQuestions");
 const questionNode = document.querySelector("#question");
 const buttonContainerNode = document.querySelector("#button-container");
 const settingsNode = document.querySelector("#settings");
-let startButtonNode = document.querySelector("#startQuiz");
+const startButtonNode = document.querySelector("#startQuiz");
 let currentQIndex = 0;
 let savedAnswers = [];
 
@@ -16,8 +16,8 @@ async function getCategories(url) {
   return categoriesJSON;
 }
 
-
-  startButtonNode.addEventListener("click", getQuizSettings)
+//Starts quiz with current settings
+startButtonNode.addEventListener("click", getQuizSettings)
 
 quizSettings(categoriesURL)
 
@@ -47,7 +47,7 @@ function getQuizSettings() {
   if (numQuestions != "") {
     queryString += `amount=${settingsNodeList[0].value}`;
   } else return;
-  
+
   if (category != "") {
     queryString += `&category=${category}`;
   }
@@ -77,8 +77,14 @@ function trueFalseHandler() {
   //TODO
 }
 
-function checkAnswers() {
-  //TODO
+function checkAnswers(savedAnswers, quizArray) {
+  let score = 0;
+  for(let i = 0; i < quizArray.length; i++) {
+    if (savedAnswers[i] == quizArray[i].correct_answer) {
+      score++;
+    }
+  }
+  questionNode.innerHTML = `Total score: ${score}`
 }
 
 
@@ -92,7 +98,7 @@ async function getQuestions(url) {
 async function startQuiz(questions) {
   let quizArray = await questions;
   let alternatives = [];
-
+  
   settingsNode.innerHTML= "";
 
   let randomIndex = Math.floor(Math.random() * quizArray[currentQIndex].incorrect_answers.length + 1); // Creates a random index for inserting correct answer
@@ -139,9 +145,9 @@ async function startQuiz(questions) {
   else if (quizArray.type = "boolean") { // If answer is true or false
 
     questionNode.innerHTML += `
-      <input class="radio-btn" type=radio id="true" name="alternative" value="false"}">
+      <input class="radio-btn" type=radio id="true" name="alternative" value="True"}">
       <label for="true">True</label> <br>
-      <input class="radio-btn" type=radio id="false" name="alternative" value="false"}">
+      <input class="radio-btn" type=radio id="false" name="alternative" value="False"}">
       <label for="false">False</label> <br>
     `;
   }
@@ -159,12 +165,21 @@ async function startQuiz(questions) {
 
 
   //Buttons
-  buttonContainerNode.innerHTML += `
-  <button id="back-btn">Back</button>
-  <button id="next-btn">Next</button>
-  `;
+  if (currentQIndex+1 == quizArray.length) {
+    buttonContainerNode.innerHTML = `
+    <button id="back-btn">Back</button>
+    <button id="next-btn">Submit</button>`;
+   
+  } else {
+    buttonContainerNode.innerHTML += `
+    <button id="back-btn">Back</button>
+    <button id="next-btn">Next</button>
+    `;
+
+  }
   let backButtonNode = document.querySelector("#back-btn");
   let nextButtonNode = document.querySelector("#next-btn");
+  
   
 
   backButtonNode.addEventListener("click", () => {
@@ -179,13 +194,13 @@ async function startQuiz(questions) {
   })
 
   nextButtonNode.addEventListener("click", () => {
-    if (currentQIndex <= quizArray.length) {
+    if ((currentQIndex+1) < quizArray.length) {
       currentQIndex++;
       questionNode.innerHTML = "";
       buttonContainerNode.innerHTML = "";
       startQuiz(quizArray, currentQIndex, savedAnswers);
     } else {
-      return;
+      checkAnswers(savedAnswers, quizArray)
     }
   })
 
