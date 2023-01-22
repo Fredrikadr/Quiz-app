@@ -12,15 +12,15 @@ let savedAnswers = [];
 let questions = undefined;
 
 async function getCategories(url) {
-  let categories = await fetch(url)
+  let categories = await fetch(url);
   let categoriesJSON = await categories.json();
   return categoriesJSON;
 }
 
 //Starts quiz with current settings
-startButtonNode.addEventListener("click", getQuizSettings)
+startButtonNode.addEventListener("click", startQuiz);
 
-quizSettings(categoriesURL)
+
 
 async function quizSettings(url) {
   let categories = await getCategories(url);  //Fetches categories from API
@@ -34,16 +34,17 @@ async function quizSettings(url) {
   })
 
 
-
 }
 
-async function getQuizSettings() {
+async function startQuiz() {
+  
   let queryString = url;
   let settingsNodeList = document.querySelectorAll("#settings")[0];
   let numQuestions = settingsNodeList[0].value;
   let category = settingsNodeList[1].value;
   let difficulty = settingsNodeList[2].value
   let questionType = settingsNodeList[3].value
+
 
   if (numQuestions != "") {
     queryString += `amount=${settingsNodeList[0].value}`;
@@ -60,10 +61,10 @@ async function getQuizSettings() {
   }
   console.log(queryString)
   questions = await getQuestions(queryString);
-  startQuiz();
 
+  settingsNode.innerHTML = "";
 
-
+  renderQuestion();
 
 }
 
@@ -111,7 +112,7 @@ function trueFalseHandler() {
   let alternatives = [questions[currentQIndex].incorrect_answers, questions[currentQIndex].correct_answer]
   .sort()
   .reverse();
-  
+
   alternatives.forEach(alternative => {
     if (alternative == savedAnswers[currentQIndex]) {
       questionNode.innerHTML += `
@@ -151,12 +152,10 @@ async function getQuestions(url) {
   return JSON.results;
 }
 
-async function startQuiz() {
-  settingsNode.innerHTML = "";
-
-  questionNode.innerHTML += `<p>${questions[currentQIndex].question}</p>`; // Writes the question to the page
-
-
+async function renderQuestion() {
+  buttonContainerNode.innerHTML = "";
+  questionNode.innerHTML += `<h3>${questions[currentQIndex].question}</h3>`; // Writes the question to the page
+  
   if (questions[currentQIndex].type == "multiple") { // If question is multiple choice
     multipleChoiceHandler()
   }
@@ -188,11 +187,10 @@ async function startQuiz() {
     <button id="back-btn">Back</button>
     <button id="next-btn">Next</button>
     `;
-
   }
+
   let backButtonNode = document.querySelector("#back-btn");
   let nextButtonNode = document.querySelector("#next-btn");
-
 
 
   backButtonNode.addEventListener("click", () => {
@@ -201,8 +199,7 @@ async function startQuiz() {
     } else {
       currentQIndex--;
       questionNode.innerHTML = "";
-      buttonContainerNode.innerHTML = "";
-      startQuiz(questions, currentQIndex, savedAnswers);
+      renderQuestion();
     }
   })
 
@@ -210,8 +207,7 @@ async function startQuiz() {
     if ((currentQIndex + 1) < questions.length) {
       currentQIndex++;
       questionNode.innerHTML = "";
-      buttonContainerNode.innerHTML = "";
-      startQuiz(questions, currentQIndex, savedAnswers);
+      renderQuestion();
     } else {
       checkAnswers(savedAnswers, questions)
     }
@@ -219,5 +215,4 @@ async function startQuiz() {
 
 }
 
-
-/* startQuiz(getQuestions(url)) */
+quizSettings(categoriesURL);
