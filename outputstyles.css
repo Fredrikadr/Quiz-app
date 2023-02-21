@@ -11,11 +11,12 @@ main {
   background-color: #ecf0f1;
   padding: 50px;
   width: 80%;
-  margin: 50px auto;
+  margin: 0 auto;
   margin-top: 50px;
   border-radius: 20px;
   box-shadow: 5px 5px 30px black;
   min-height: 150px;
+  line-height: 1.5;
 }
 
 #settings {
@@ -34,6 +35,9 @@ main {
   font-weight: 900;
   text-shadow: 1px 1px 2px black;
   font-size: larger;
+}
+#settings #message {
+  text-align: center;
 }
 
 #question {

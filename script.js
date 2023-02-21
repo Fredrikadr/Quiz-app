@@ -44,7 +44,12 @@ async function startQuiz() {
   let category = settingsNodeList[1].value;
   let difficulty = settingsNodeList[2].value
   let questionType = settingsNodeList[3].value
+  let messageNode = document.querySelector("#message")
 
+  if(numQuestions == "" || numQuestions == 0 || numQuestions > 50) {
+    messageNode.innerHTML = "Number of questions must be between 1 and 50."
+    return;
+  }
 
   if (numQuestions != "") {
     queryString += `amount=${settingsNodeList[0].value}`;
