@@ -32,6 +32,9 @@ main h1 {
   margin: 0 auto;
 }
 #settings #startQuiz {
+  margin-top: 20px;
+}
+#settings #startQuiz {
   background-color: #27ae60;
   width: 200px;
   align-self: center;
@@ -58,4 +61,15 @@ main h1 {
 }
 #button-container button {
   padding: 10px 20px;
+}
+
+@media only screen and (max-width: 760px) {
+  main {
+    width: 90%;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  #question {
+    width: 90%;
+  }
 }/*# sourceMappingURL=styles.css.map */

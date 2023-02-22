@@ -38,6 +38,9 @@ main {
   max-width: 70%;
   gap: 10px;
   margin: 0 auto;
+  #startQuiz {
+    margin-top: 20px;
+  }
 
   #startQuiz {
     background-color: $success-color;
@@ -68,5 +71,16 @@ main {
 
   button {
     padding: 10px 20px;
+  }
+}
+
+@media only screen and (max-width: 760px) {
+  main {
+    width: 90%;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  #question {
+    width: 90%;
   }
 }
