@@ -124,12 +124,6 @@ function trueFalseHandler() {
       `;
     }
   })
-  /*   questionNode.innerHTML += `
-        <input class="radio-btn" type=radio id="true" name="alternative" value="True"}">
-        <label for="true">True</label> <br>
-        <input class="radio-btn" type=radio id="false" name="alternative" value="False"}">
-        <label for="false">False</label> <br>
-      `; */
 }
 
 function checkAnswers(savedAnswers, questions) {
