@@ -1,4 +1,4 @@
-This quiz app uses the Open Trivia Database API to fetch questions based on user settings.
+This quiz app uses the [Open Trivia Database API](https://opentdb.com/) to fetch questions based on user settings.
 
 Click [here](https://quiz-app-fvac.onrender.com/) for a live preview!
 
