@@ -1,4 +1,3 @@
-
 let url = "https://opentdb.com/api.php?";
 let categoriesURL = "https://opentdb.com/api_category.php";
 
@@ -21,7 +20,6 @@ async function getCategories(url) {
 startButtonNode.addEventListener("click", startQuiz);
 
 
-
 async function quizSettings(url) {
   let categories = await getCategories(url);  //Fetches categories from API
   let categoryNode = document.querySelector("#category-select");
@@ -35,15 +33,8 @@ async function quizSettings(url) {
 
 }
 
-
-
-async function showSettings() {
-
-}
-
-
 async function startQuiz() {
-  
+
   let queryString = url;
   let settingsNodeList = document.querySelectorAll("#settings")[0];
   let numQuestions = settingsNodeList[0].value;
@@ -239,7 +230,7 @@ async function renderQuestion() {
       checkAnswers(savedAnswers, questions);
       buttonContainerNode.innerHTML = "";
       let retryButton = document.createElement("button");
-      
+
       retryButton.innerText = "Try again";
       retryButton.addEventListener("click", retryQuiz);
       buttonContainerNode.appendChild(retryButton);
@@ -250,9 +241,6 @@ async function renderQuestion() {
         location.reload();
       })
       buttonContainerNode.appendChild(newQuizButton)
-
-
-
     }
   })
 
