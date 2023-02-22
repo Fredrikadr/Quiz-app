@@ -79,10 +79,6 @@ async function startQuiz() {
 
 }
 
-function getRandomIndex(arrLength) {
-  //TODO
-}
-
 function multipleChoiceHandler() {
   let alternatives = [];
   // Creates a random index for inserting correct answer
@@ -151,22 +147,22 @@ function checkAnswers(savedAnswers, questions) {
     if (savedAnswers[i] == questions[i].correct_answer) {
       questionNode.innerHTML += `
       <h4>${i + 1}. ${questions[i].question}</h4>
-      <p style="color: green ">${savedAnswers[i]}</p>
+      <p style="color: green ">${savedAnswers[i]} 👍</p>
       `
       score++;
     } else if (!savedAnswers[i]) {
       questionNode.innerHTML += `
       <h4>${i + 1}. ${questions[i].question}</h4>
-      <p style="color: red ">You didn't answer.</p>
+      <p style="color: red ">You didn't answer. 😐</p>
       `
     } else {
       questionNode.innerHTML += `
       <h4>${i + 1}. ${questions[i].question}</h4>
-      <p style="color: red ">${savedAnswers[i]}</p>
+      <p style="color: red ">${savedAnswers[i]} 😞</p>
       `
     }
   }
-  questionNode.innerHTML += `<h4>Total score: ${score}/${questions.length}</h4>`
+  questionNode.innerHTML += `<h3>Total score: ${score}/${questions.length}</h3>`
 }
 
 
