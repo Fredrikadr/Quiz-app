@@ -10,7 +10,8 @@ How to use this app:
 - Select catergory
 - Select difficulty
 - Select type (true/false or multiple choice)
-- Press "Start Quiz"
+
+  Press "Start Quiz"
 
 
 
