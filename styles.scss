@@ -59,7 +59,7 @@ main {
 }
 
 #question {
-  width: 50%;
+  width: 60%;
   margin: 0 auto;
 }
 
@@ -74,7 +74,7 @@ main {
   }
 }
 
-@media only screen and (max-width: 760px) {
+@media only screen and (max-width: 900px) {
   main {
     width: 90%;
     padding-left: 10px;

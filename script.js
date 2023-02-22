@@ -43,7 +43,7 @@ async function showSettings() {
 
 
 async function startQuiz() {
-  startButtonNode.removeEventListener("click", startQuiz)
+  
   let queryString = url;
   let settingsNodeList = document.querySelectorAll("#settings")[0];
   let numQuestions = settingsNodeList[0].value;
@@ -70,6 +70,7 @@ async function startQuiz() {
   if (questionType != "") {
     queryString += `&type=${questionType}`
   }
+  startButtonNode.removeEventListener("click", startQuiz);
 
   questions = await getQuestions(queryString);
 

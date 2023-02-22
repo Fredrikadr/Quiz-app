@@ -49,7 +49,7 @@ main h1 {
 }
 
 #question {
-  width: 50%;
+  width: 60%;
   margin: 0 auto;
 }
 
@@ -63,7 +63,7 @@ main h1 {
   padding: 10px 20px;
 }
 
-@media only screen and (max-width: 760px) {
+@media only screen and (max-width: 900px) {
   main {
     width: 90%;
     padding-left: 10px;
