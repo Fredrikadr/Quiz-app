@@ -10,13 +10,18 @@ body {
 main {
   background-color: #ecf0f1;
   padding: 50px;
-  width: 80%;
+  width: 60%;
   margin: 0 auto;
   margin-top: 50px;
   border-radius: 20px;
   box-shadow: 5px 5px 30px black;
   min-height: 150px;
   line-height: 1.5;
+}
+main h1 {
+  text-align: center;
+  font-size: 46px;
+  margin-top: 0;
 }
 
 #settings {
@@ -53,6 +58,4 @@ main {
 }
 #button-container button {
   padding: 10px 20px;
-}
-
-/*# sourceMappingURL=outputstyles.css.map */
+}/*# sourceMappingURL=styles.css.map */
